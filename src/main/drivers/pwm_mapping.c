@@ -356,17 +356,8 @@ pwmIOConfiguration_t *pwmInit(drv_pwm_config_t *init)
                 continue;
             }
 
-#if defined(CC3D) && !defined(CC3D_PPM1)
-            if (init->useFastPwm || init->pwmProtocolType == PWM_TYPE_BRUSHED) {
-                // Skip it if it would cause PPM capture timer to be reconfigured or manually overflowed
-                if (timerHardwarePtr->tim == TIM2) {
-                    addBootlogEvent6(BOOT_EVENT_TIMER_CH_SKIPPED, BOOT_EVENT_FLAGS_WARNING, timerIndex, pwmIOConfiguration.motorCount, pwmIOConfiguration.servoCount, 3);
-                    continue;
-                }
-            }
-#endif
-
             pwmMotorConfig(timerHardwarePtr, pwmIOConfiguration.motorCount, init->motorPwmRate, init->idlePulse, init->pwmProtocolType, init->enablePWMOutput);
+
             if (init->useFastPwm) {
                 pwmIOConfiguration.ioConfigurations[pwmIOConfiguration.ioCount].flags = PWM_PF_MOTOR | PWM_PF_OUTPUT_PROTOCOL_FASTPWM | PWM_PF_OUTPUT_PROTOCOL_PWM;
             } else if (init->pwmProtocolType == PWM_TYPE_BRUSHED) {
