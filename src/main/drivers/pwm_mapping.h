@@ -80,14 +80,6 @@ typedef struct drv_pwm_config_s {
     sonarIOConfig_t sonarIOConfig;
 } drv_pwm_config_t;
 
-
-enum {
-    MAP_TO_PPM_INPUT = 1,
-    MAP_TO_PWM_INPUT,
-    MAP_TO_MOTOR_OUTPUT,
-    MAP_TO_SERVO_OUTPUT,
-};
-
 typedef enum {
     PWM_PF_NONE = 0,
     PWM_PF_MOTOR = (1 << 0),

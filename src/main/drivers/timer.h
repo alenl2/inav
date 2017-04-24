@@ -78,6 +78,18 @@ typedef struct timerDef_s {
 #endif
 } timerDef_t;
 
+enum {
+    TIM_USE_NONE            = 0,
+    TIM_USE_PPM             = (1 << 0),
+    TIM_USE_PWM             = (1 << 1),
+    TIM_USE_MC_MOTOR        = (1 << 2),     // Multicopter motor output
+    TIM_USE_MC_SERVO        = (1 << 3),     // Multicopter servo output (i.e. TRI)
+    TIM_USE_MC_CHNFW        = (1 << 4),     // Multicopter servo output if channel forwarding is used
+    TIM_USE_FW_MOTOR        = (1 << 5),
+    TIM_USE_FW_SERVO        = (1 << 6),
+    TIM_USE_LED             = (1 << 24),
+};
+
 typedef struct timerHardware_s {
     TIM_TypeDef *tim;
     ioTag_t tag;
@@ -88,6 +100,7 @@ typedef struct timerHardware_s {
 #if defined(STM32F3) || defined(STM32F4) || defined(STM32F7)
     uint8_t alternateFunction;
 #endif
+    uint32_t mapping;
 } timerHardware_t;
 
 enum {
